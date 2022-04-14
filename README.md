@@ -12,8 +12,17 @@ PPiing 프로젝트를 진행할 때 필요한 문서들을 기록하는 저장�
 
 ## 개발 명세
 
-[링크](./develop_specification)
+[링크](](./develop_planning)
+
+## 백앤드 관련 개발 문서
+
+[링크]([./develop_backend)
+
+## 프론트앤드 관련 개발 문서
+
+[링크]([./develop_frontend)
 
 ## 팁
 
 [링크](./tips)
+
