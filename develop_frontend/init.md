@@ -41,7 +41,7 @@ $> npm run dev
 Vite를 통해 React 프로젝트를 생성했으니 react-router-dom은 npm을 통해 설치만 하면 된다.   
 아래 명령어를 통해 설치한다.   
 ```powershell
-npm install react-router-dom
+$> npm install react-router-dom
 ```   
 
 ---
@@ -53,7 +53,7 @@ $> npm install eslint --save-dev
 ```   
 설치가 완료되었다면 아래 명령어를 통해 ESLint를 초기화한다.   
 ```powershell
-npm init @eslint/config
+$> npm init @eslint/config
 # How would you like to use ESLint? : To check syntax, find problems, and enforce code style
 # What type of modules does your project use? : JavaScript modules (import/export)
 # Which framework does your project use? : React
@@ -85,7 +85,7 @@ npm을 통해 실행할 수 있도록 아래와 같이 설정을 추가한다.
 ### Install Prettier
 아래 명령어를 통해 Prettier를 설치한다.   
 ```powershell
-npm install prettier --save-dev
+$> npm install prettier --save-dev
 ```   
 이 때, 프리티어와 ESLint를 함께 사용하기 위한 플러그인도 설치한다.   
 ```powershell
