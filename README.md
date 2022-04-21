@@ -22,7 +22,10 @@ PPiing 프로젝트를 진행할 때 필요한 문서들을 기록하는 저장�
 
 [링크](./develop_frontend)
 
+## 프론트엔드 관련 학습 문서
+
+[링크](./study_frontend)
+
 ## 팁
 
 [링크](./tips)
-
