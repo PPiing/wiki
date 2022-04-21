@@ -1,5 +1,5 @@
 # Front-End
-Transcendence Front-End 파트는 다음과 같은 플러그인? 들을 설치한다.
+Transcendence Front-End 파트는 다음과 같은 사항들을 설치한다.
 
 <aside>
 
@@ -12,9 +12,9 @@ Transcendence Front-End 파트는 다음과 같은 플러그인? 들을 설치�
 ### VSCode
 VSCode에서 환경을 설정하기 위해 아래 Extension을 설치한다.   
 **- ESLint**   
-**- Prettier**   
+**- Prettier**      
+   
 설치가 끝났다면 아래와 같은 설정을 해 준다.   
-
 **- Default Formatter : Prettier**   
 **- Format On Save : Check**   
 
