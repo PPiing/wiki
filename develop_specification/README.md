@@ -8,6 +8,10 @@
 
 [링크](https://docs.google.com/spreadsheets/d/1Io0vCbHKBOxY5xH10IJMvuXHVHIXp8okB2LeFMkNzC4/edit?usp=sharing)
 
+## ERD
+
+[링크](https://www.erdcloud.com/d/tiiLNzAnAf8qSwBok)
+
 ## 웹 보안 관련 취약점 분석 및 정리
 
 개발을 진행하며 보안 관련 숙지 및 고려해야 할 사항들입니다.
