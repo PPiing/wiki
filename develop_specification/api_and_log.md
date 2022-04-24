@@ -87,8 +87,6 @@ Client에서 서비스 이용시 문제가 생긴다면, 어떤 문제인지 cat
 
 [API template](api_template.md)
 
-<hr>
-
 ## Log
 - 한 유저가 API를 요청하고부터 응답을 받을 때까지의 과정을 기록합니다. (→ user_seq를 과정마다 기록)
 - API 요청과 응답 사이에서 사용한 함수, DB에 어떤 쿼리를 보냈는지를 기록합니다.
