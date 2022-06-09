@@ -1,159 +1,143 @@
-# 채팅 모듈 구성 및 명세
-## 추가 설치한 모듈
+# 채팅 API 명세
 
-```bash
-$> npm install cache-manager @nestjs/schedule @nestjs/event-emitter
-$> npm install -D @types/cache-manager @types/cron
-```
+## HTTP API 명세
 
-캐시, 스케줄러, 이벤트 모듈을 추가합니다.
+- 백앤드 모듈의 /docs 엔드포인트에 접근하면 Swagger로 작성된 명세를 확인할 수 있습니다.
 
-## 컨트롤러와 게이트웨이
-
-채팅 프로젝트의 구성 요소는 다음과 같습니다.
-
-- 컨트롤러 : HTTP Request/Respone 처리
-- 게이트웨이 : Socket 송신/수신 처리
-- 서비스 : 비즈니스 로직 전반
-- 리포지토리 : RDBMS와 상호작용
-
-그 밖에 추가로 사용하는 nest.js의 모듈(기능)은 다음과 같습니다. 아래 모듈들은 Spring Framework에도 존재하므로 nest.js의 기능보다 전반적인 개념이나 기타 사용 예를 참조하시려면 nest.js 외에도 Spring Framework 문서를 참조하시면 도움이 될 겁니다.
-
-- cache : 채팅을 DB에 바로 저장하지 않고 캐시할 때 사용합니다.
-- schedule : 특정 작업을 특정 주기 혹은 시간에 실행할 때 사용합니다.
-- event : HTTP Request에 의해 특정 소켓 메시지를 클라이언트로 송부해야 할 때 컨트롤러와 게이트웨이 사이를 연결하기 위해 사용합니다.
-
-## 채팅 API 명세
-
-## 컨트롤러 구성 및 명세
-
-컨트롤러는 HTTP API 요청 및 응답을 담당합니다. 현재 HTTP API는 다음 기능을 수행합니다.
-
-- …
-- POST /api/chatrooms/new
-    - 새로운 채팅방을 만듬
-    - 요청
-        
-        ```json
-        {
-          "chatType": string;
-          "chatName": string;
-          "password": string;
-          "isDirected": boolean;
-        }
-        ```
-        
-    - 응답
-        
-        ```json
-        201 response
-        {
-          chatSeq: string;
-          chatName: string;
-        }
-
-        40x response
-        TBD
-        ```
-        
-- PUT /api/chatrooms/join/{roomId}
-    - 채팅방에 들어감
-    - 요청
-        
-        ```json
-        {
-          "chatSeq": number; // 들어가고자 하는 방 ID
-        }
-        ```
-        
-    - 응답
-        
-        ```json
-        TBD
-        ```
-        
-- DELETE /api/chatrooms/leave/{roomId}
-    - 채팅방에서 떠남
-    - 응답
-        
-        ```json
-        204 response
-        ```
-        
-- GET /api/chatrooms/message/{roomId}/{msgID}/{count}
-    - 이전 채팅들을 {count} 만큼 가져옴. 이전 채팅의 기준인 {msgID}가 -1이라면 가장 최신의 채팅을 가져옴
-    - 응답
-        
-        ```json
-        TBD
-        ```
-        
-
-## 게이트웨이 구성 및 명세
-
-게이트웨이는 소켓 (socket.io) 통신을 담당합니다. 소켓 데이터의 송신 및 수신을 담당합니다.
+## 소켓 API 명세
 
 ### 서버의 소켓 송신
 
-- event : join room
-    - desc : 방에 조인하고자 할 때 호출됨
-    - at : HTTP로 클라이언트(들) 을 방에 조인 요청할 때
-    - to : 요청을 보낸 클라이언트를 포함한 룸 멤버들
-    - data
-        
-        ```json
-        TBD
-        ```
-        
-- event : new room
-    - desc : 새 방이 생성될 때 방 정보를 보냄
-    - at : HTTP 방 생성 요청
-    - to : 전부 / 룸 멤버들
-    - data
-        
-        ```json
-        TBD
-        ```
-        
-- event : user leave
-    - desc : 유저가 방을 나갈 때 (내보낼 때) 정보를 보냄
-    - at : HTTP 요청으로 유저가 방을 나갈 때 (강퇴당할 때)
-    - to : 나가는 (강퇴당하는) 클라이언트를 포함한 룸 멤버들
-    - data
-        
-        ```json
-        TBD
-        ```
-        
-- event : rooms
-    - desc : 채팅 소켓 연결이 성공적으로 성사될 때 클라이언트에게 본인이 소속된 방의 리스트를 보냄
-    - at : 클라이언트 채팅 소켓 연결
-    - to : 연결 요청한 클라이언트
-    - data
-        
-        ```json
-        TBD
-        ```
-        
-- event : chat
-    - desc : 클라이언트가 서버로 채팅을 전송할 때 해당 채팅을 보낸 클라이언트를 포함하여 방 유저들에게 보냄
-    - at : 클라이언트가 서버로 채팅을 보낸 이후
-    - to : 본인 포함 클라이언트가 속한 룸
-    - data
-        
-        ```json
-        TBD
-        ```
-        
+서버에서 소켓 데이터를 송신할 때에는 다음 인터페이스를 준수합니다. 인터페이스의 필드들은 이벤트에 맞게 데이터를 송부해 줍니다.
+
+```tsx
+interface ISocketSend {
+  rooms?: number[]; // 채팅방 번호 배열
+  chatSeq?: number; // 채팅룸 ID
+  userIDs?: number[]; // 동작을 수행할 대상의 userIDs 배열
+  msg?: string; // 메시지
+  id?: number; // 메시지일 경우 고유 ID
+  kicked?: boolean; // 방에서 자진해서 나간건지 강퇴당했는지 여부
+  role?: PartcAuth; // 유저의 권한이 변경될 때 권한을 나타냄
+}
+```
+
+- event : `chat:init`
+
+  - desc : 클라이언트가 서버와 소켓 통신을 하기 위해 chatrooms 네임스페이스로 연결을 맺을 때 정상적으로 연결이 성사되면 서버가 클라이언트로 접속 당시에 클라이언트가 참여 중인 방 리스트를 알려주기 발생하는 이벤트입니다. 클라이언트는 해당 이벤트가 발생하면 클라이언트가 참여 중인 방과 DM 목록을 적절히 렌더링합니다. 이때 클라이언트는 방 상세 정보를 받아오기 위해 HTTP API를 사용해 방의 추가 정보를 받아올 수 있습니다.
+
+  - at : 채팅 세션이 성립되고 난 직후
+
+  - to : 접속 요청한 클라이언트
+
+  - data
+
+    ```json
+    {
+    	"rooms": [방/DM ID 배열]
+    }
+    ```
+
+- event : `room:leave`
+
+  - desc : 유저가 방을 떠나거나 관리자에 의해 강퇴당할 때 발생하는 이벤트입니다. 본인이 방을 나가거나 강퇴당할 때, 본인을 포함한 방 인원들에게 모두 송부됩니다. 해당 이벤트를 받으면 클라이언트는 방의 멤버에서 해당 멤버를 제외시킵니다.
+
+  - at : HTTP 요청으로 유저가 방을 나갈 때 (강퇴당할 때)
+
+  - to : 나가는 (강퇴당하는) 클라이언트를 포함한 방에 속한 클라이언트들
+
+  - data
+
+    ```json
+    {
+    	"chatSeq": 방 ID
+      "userIDs": 나간 유저 ID 배열 (항상 크기가 1임)
+      "kicked": 강퇴당했으면 true, 이외엔 false
+    }
+    ```
+
+- event : `room:chat`
+
+  - desc : 클라이언트가 서버로 채팅을 전송할 때나 알림 메시지 등을 채팅 포맷으로 보내줄 때 발생하는 이벤트이며 방 ID, 전달한 유저 ID, 메시지, 메시지 고유 ID를 보내줍니다. 만약 시스템 메시지일 경우 유저 ID는 0입니다. 해당 이벤트를 받으면 방에 채팅 메시지를 렌더링합니다.
+
+  - at : 클라이언트가 서버로 채팅을 보낸 이후 / 서버가 알림 메시지를 생성할 때
+
+  - to : 클라이언트가 속한 룸
+
+  - data
+
+    ```json
+    {
+    	"chatSeq": 방 ID
+      "userIDs": 채팅을 보낸 유저 ID (항상 크기가 1임)
+      "msg": 채팅 메시지 본문
+      "id": 메시지의 고유 ID
+    }
+    ```
+
+- event : `room:join`
+
+  - desc : 기존 방에 새로운 유저가 추가되거나, 본인이 방에 추가되면 방과 유저들의 정보를 보내줍니다. 본인 및 다른 사람들에게도 발생하는 이벤트입니다. 이 이벤트가 발생하면 해당 방 리스트의 유저를 업데이트 해야 합니다.
+
+  - at : 본인이 속한 방에 유저 추가
+
+  - to : 방에 속한 클라이언트들
+
+  - data
+
+    ```json
+    {
+    	"chatSeq": 방 ID
+      "userIDs": 들어온 유저 ID 배열
+    }
+    ```
+
+- event : `grant`
+
+  - desc : 유저 권한이 변경될 때 변경되었다고 알려줍니다.
+
+  - at : 내가 속한 방에서 특정 유저의 권한이 변경될 때
+
+  - to : 클라이언트가 속한 룸
+
+  - data
+
+    ```json
+    {
+    	"chatSeq": 방 ID
+      "userIDs": 권한이 변경된 유저 ID (항상 크기가 1임)
+      "role": 권한
+    }
+    ```
 
 ### 서버의 소켓 수신
 
-- event : chat
-    - desc : 클라이언트가 메시지를 보낼 때 데이터를 처리함
-    - at : 클라이언트가 메시지를 보낼 때
-    - from : 클라이언트
-    - data
-        
-        ```json
-        TBD
-        ```
+서버에서 소켓 데이터를 수신할 때에는 다음 인터페이스를 준수합니다.
+
+```tsx
+interface ISocketRecv {
+  content: string; // 메시지
+  at: number; // 메시지를 보내고자 하는 룸 ID
+}
+```
+
+- event : 
+
+  ```
+  chat
+  ```
+
+  - desc : 클라이언트가 방에 메시지를 보내기 위해 보내는 이벤트입니다.
+
+  - at : 클라이언트가 메시지를 보낼 때
+
+  - from : 클라이언트
+
+  - data
+
+    ```json
+    {
+      "content": 메시지
+      "at": 메시지를 보내고자 하는 룸 ID
+    }
+    ```
