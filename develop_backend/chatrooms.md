@@ -30,11 +30,11 @@ interface ISocketSend {
 
   - to : 접속 요청한 클라이언트
 
-  - data
+  - 예시 data
 
     ```json
     {
-    	"rooms": [방/DM ID 배열]
+      "rooms": [0, 2, 4] // 방/DM ID 배열
     }
     ```
 
@@ -46,13 +46,13 @@ interface ISocketSend {
 
   - to : 나가는 (강퇴당하는) 클라이언트를 포함한 방에 속한 클라이언트들
 
-  - data
+  - 예시 data
 
     ```json
     {
-    	"chatSeq": 방 ID
-      "userIDs": 나간 유저 ID 배열 (항상 크기가 1임)
-      "kicked": 강퇴당했으면 true, 이외엔 false
+      "chatSeq": 0, // 방 ID
+      "userIDs": [1], // 나간 유저 ID 배열 (항상 크기가 1임)
+      "kicked": false // 강퇴당했으면 true, 이외엔 false
     }
     ```
 
@@ -64,14 +64,14 @@ interface ISocketSend {
 
   - to : 클라이언트가 속한 룸
 
-  - data
+  - 예시 data
 
     ```json
     {
-    	"chatSeq": 방 ID
-      "userIDs": 채팅을 보낸 유저 ID (항상 크기가 1임)
-      "msg": 채팅 메시지 본문
-      "id": 메시지의 고유 ID
+      "chatSeq": 0, // 방 ID
+      "userIDs": [12], // 채팅을 보낸 유저 ID (항상 크기가 1임)
+      "msg": "안녕하세요", // 채팅 메시지 본문
+      "id": 123 // 메시지의 고유 ID
     }
     ```
 
@@ -83,30 +83,30 @@ interface ISocketSend {
 
   - to : 방에 속한 클라이언트들
 
-  - data
+  - 예시 data
 
     ```json
     {
-    	"chatSeq": 방 ID
-      "userIDs": 들어온 유저 ID 배열
+      "chatSeq": 1, // 방 ID
+      "userIDs": [10, 12] // 들어온 유저 ID 배열
     }
     ```
 
 - event : `grant`
 
-  - desc : 유저 권한이 변경될 때 변경되었다고 알려줍니다.
+  - desc : 유저 권한이 변경될 때 변경되었다고 알려줍니다. role 필드는 요구사항 정의서 문서 [링크](https://docs.google.com/spreadsheets/d/1Io0vCbHKBOxY5xH10IJMvuXHVHIXp8okB2LeFMkNzC4/edit#gid=1621334604) 의 마스터코드 탭에 ChatParticipant 라는 이름으로 명시되어 있습니다. 
 
   - at : 내가 속한 방에서 특정 유저의 권한이 변경될 때
 
   - to : 클라이언트가 속한 룸
 
-  - data
+  - 예시 data
 
     ```json
     {
-    	"chatSeq": 방 ID
-      "userIDs": 권한이 변경된 유저 ID (항상 크기가 1임)
-      "role": 권한
+      "chatSeq": 1, // 방 ID
+      "userIDs": [12], // 권한이 변경된 유저 ID (항상 크기가 1임)
+      "role": "CPAU20" // 관리자
     }
     ```
 
@@ -133,11 +133,11 @@ interface ISocketRecv {
 
   - from : 클라이언트
 
-  - data
+  - 예시 data
 
     ```json
     {
-      "content": 메시지
-      "at": 메시지를 보내고자 하는 룸 ID
+      "content": "안녕하세요", // 메시지
+      "at": 1 // 메시지를 보내고자 하는 룸 ID
     }
     ```
