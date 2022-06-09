@@ -121,11 +121,7 @@ interface ISocketRecv {
 }
 ```
 
-- event : 
-
-  ```
-  chat
-  ```
+- event : `chat`
 
   - desc : 클라이언트가 방에 메시지를 보내기 위해 보내는 이벤트입니다.
 
