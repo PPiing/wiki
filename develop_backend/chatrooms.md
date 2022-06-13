@@ -92,7 +92,7 @@ interface ISocketSend {
     }
     ```
 
-- event : `grant`
+- event : `room:grant`
 
   - desc : 유저 권한이 변경될 때 변경되었다고 알려줍니다. role 필드는 요구사항 정의서 문서 [링크](https://docs.google.com/spreadsheets/d/1Io0vCbHKBOxY5xH10IJMvuXHVHIXp8okB2LeFMkNzC4/edit#gid=1621334604) 의 마스터코드 탭에 ChatParticipant 라는 이름으로 명시되어 있습니다. 
 
