@@ -80,8 +80,15 @@
     
     ```tsx
     {
-    	direction: PaddleDirective; // 0(stop) , 1(right) , -1(left)
+    	direction: PaddleDirective; // 0(stop) , 1(up) , -1(down)
     }
+    /*
+        export const enum PaddleDirective {
+          UP = 1,
+          STOP = 0,
+          DOWN = -1,
+        }
+    */
     ```
     
 
