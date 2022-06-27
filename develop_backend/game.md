@@ -106,8 +106,8 @@
     
     ```tsx
     {
-    	top: userId,
-    	btm: userId,
+    	blue: userId,
+    	red: userId,
     }
     ```
     
@@ -189,8 +189,8 @@
     ```tsx
     {
     	ball: { x, y };
-    	paddleTop: { x, y };
-    	paddleBtm: { x, y };
+    	paddleBlue: { x, y };
+    	paddleRed: { x, y };
     }
     ```
     
@@ -204,8 +204,8 @@
     
     ```tsx
     {
-    	scoreTop: number;
-    	scoreBtm: number;
+    	scoreBlue: number;
+    	scoreRed: number;
     }
     ```
     
