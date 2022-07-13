@@ -80,7 +80,7 @@
 
 ## 큐잉
 
-- `game:match`
+- `game:ready`
     
     Desc: 매칭 큐 서비스에서 매칭큐에 게임 참가 유저 두명이 들어 왔을 경우에 해당 두 유저에게 게임이 매칭 되었다는 이벤트를 전송하게 된다.
     
@@ -88,30 +88,12 @@
     
     To: 게임을 참가를 희망 했던 두 유저.
     
-    ```tsx
-    {
-    	blue: userId,
-    	red: userId,
-    }
-    ```
-    
-
-## ~~대기방~~
-
-
-## 게임방
-
-- `game:ready`
-    
     Desc: 대기방에서 두 플레이어가 매칭되었을때 시작 전에 게임방으로 입장을 알리는 event를 전송해주게 됩니다.
     
-    At: 게임 시작후에
-    
-    To: 두 플레이어에게 보냅니다.
     
     ```tsx
     {
-    	ruleData: {
+        ruleData: {
             matchScore: number,
             ballSpeed: number,
             paddleSize: number,
@@ -122,6 +104,13 @@
     } // GameData
     ```
     
+
+## ~~대기방~~
+
+
+## 게임방
+
+
 - `game:start`
     
     게임방으로 들어오고 나서 바로 시작되지 않고 몇초간 대기 시간을 주어지게 되는데, 이때 해당 텀을 주기 위해서 game:ready후에 일정 시간 후 game:start를 발송합니다.
