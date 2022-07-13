@@ -15,9 +15,12 @@
     To: server 내부의 matching  Queue 서비스
     
     ```tsx
-    {
-    	isLadder: GameType
-    }
+    ruleData: {
+        matchScore: number,
+        ballSpeed: number,
+        paddleSize: number,
+        isRankGame: boolean,
+    },
     ```
     
 - `deQ`
@@ -29,9 +32,12 @@
     To: server 내부의 matching Queue 서비스
     
     ```tsx
-    {
-    	isLadder: GameType
-    }
+    ruleData: {
+        matchScore: number,
+        ballSpeed: number,
+        paddleSize: number,
+        isRankGame: boolean,
+    },
     ```
     
 
@@ -63,10 +69,10 @@
     ```
     
 
-## 관전
+~~## 관전~~
 
-1. `watch`
-2. `unWatch`
+~~1. `watch`~~
+~~2. `unWatch`~~
 
 # Server Emit
 
@@ -97,34 +103,33 @@
 
 - `game:ready`
     
-    Desc: 대기방에서 두 플레이어가 레디가 완료되었을때 게임 시작 전에 게임방으로 입장을 알리는 event를 전송해주게 됩니다.
+    Desc: 대기방에서 두 플레이어가 매칭되었을때 시작 전에 게임방으로 입장을 알리는 event를 전송해주게 됩니다.
     
-    At: 두 플레이어 모두 레디가 됐을 경우에 보내게 됩니다.
+    At: 게임 시작후에
     
     To: 두 플레이어에게 보냅니다.
     
     ```tsx
     {
-    	metaData: Metadata;
-    	ruleData: Ruledata;
-    	ingameData: IngameData;
-    	spec: Specdata;
+    	ruleData: {
+            matchScore: number,
+            ballSpeed: number,
+            paddleSize: number,
+            isRankGame: boolean,
+        },
+        blueUser: string, // name
+        redUser: string, // name
     } // GameData
     ```
     
 - `game:start`
     
-    게임방으로 들어오고 나서 바로 시작되지 않고 몇초간 대기 시간을 주어지게 되는데, 이때 해당 텀을 주기 위해서 해당 event 명으로 data를 통해 ready와 start를 구현합니다.
+    게임방으로 들어오고 나서 바로 시작되지 않고 몇초간 대기 시간을 주어지게 되는데, 이때 해당 텀을 주기 위해서 game:ready후에 일정 시간 후 game:start를 발송합니다.
     
-    At: game이 시작 되기 전에 몇초간의 대기 시간을 유지하기 위해서
+    At: game이 시작되었을때
     
     To: 두 플레이어에게 보냅니다.
-    
-    ```tsx
-    {
-    	status: string = "start" | "ready"
-    }
-    ```
+ 
     
 - `game:render`
     
