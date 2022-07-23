@@ -2,9 +2,8 @@
 
 # Client Emit
 
----
-
-## 큐잉
+<details>
+<summary> ## 큐잉 </summary>
 
 - `enQ`
     
@@ -39,13 +38,11 @@
         isRankGame: boolean,
     },
     ```
-    
-
-## ~~대기방~~
-
+</details>
   
 
-## 게임방
+<details>
+    <summary> ## 게임방 </summary>
 
 - `game:paddle`
     
@@ -67,18 +64,15 @@
         }
     */
     ```
-    
 
-~~## 관전~~
-
-~~1. `watch`~~
-~~2. `unWatch`~~
+</details>
 
 # Server Emit
 
 ---
 
-## 큐잉
+<details>
+    <summary> ## 큐잉 </summary>
 
 - `game:ready`
     
@@ -103,12 +97,10 @@
         redUser: string, // name
     } // GameData
     ```
-    
+</details>
 
-## ~~대기방~~
-
-
-## 게임방
+<details>
+    <summary> ## 게임방 </summary>
 
 
 - `game:start`
@@ -165,9 +157,32 @@
     	inGameData: InGameData;
     }
     ```
-    
+</details>
 
-## 재접
+> ## 2022.07.24. 최신화
+
+## 관전
+- `game:watch`
+    Desc: 게임 관전 신청
+    At: 진행중인 게임 룸넘버를 알고 있고 게임을 관전하고 싶을때
+    What: 해당게임의 진행상황을 이벤트로 전달받게 된다.
+    ```ts
+    {
+        roomId: string;
+    }
+    ```
+- `game:unwatch`
+    Desc: 게임 관전 중단
+    At: 진행중인 게임 룸넘버를 알고 있고 게임을 관전을 그만하고 
+    What: 해당게임의 이벤트 전달을 중단한다.
+    ```ts
+    {
+        roomId: string;
+    }
+    ```
+
+
+## 재접 (*구현중)
 
 1. `player:join`
 2. `player:leave`
